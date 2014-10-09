@@ -17,7 +17,6 @@ nginx-logger-{{ log_type }}:
       type: {{ log_type }}
   service:
     - running
-    - enable: True
     - require:
       - file: nginx-logger-{{ log_type }}
     - require_in:

@@ -100,6 +100,14 @@ nginx:
     - running
     - enable: True
     - restart: True
+    - require:
+{% if use_upstart %}
+      - file: nginx
+{% endif %}
+      - file: /etc/nginx/nginx.conf
+      - file: /etc/nginx/conf.d/default.conf
+      - file: /etc/nginx/conf.d/example_ssl.conf
+      - pkg: nginx
     - watch:
 {% if use_upstart %}
       - file: nginx

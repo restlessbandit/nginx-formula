@@ -4,7 +4,15 @@
 
 {% for filename in ('default', 'example_ssl') %}
 /etc/nginx/conf.d/{{ filename }}.conf:
-  file.absent
+  file.absent:
+    - require:
+      {% if pillar.get('nginx', {}).get('install_from_source') %}
+      - cmd: nginx
+      {% else %}
+      - pkg: nginx
+      {% endif %}
+    - require_in:
+      - service: nginx
 {% endfor %}
 
 /etc/nginx:
